@@ -1,17 +1,35 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
-import {createStaticNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
 import {APP_SCREEN} from './screen-types';
 import HomeScreen from '../screens/HomeScreen';
+import SplashScreen from '../screens/SplashScreen';
+import {navigationRef} from './navigation-service';
 
-// const RootStack = createNativeStackNavigator({
-//   [APP_SCREEN.HOME]: HomeScreen,
-// });
+// Tạo Native Stack Navigator
+const Stack = createNativeStackNavigator();
 
-// const Navigation = createStaticNavigation(RootStack);
 const RootNavigation = () => {
-  return <View></View>;
+  return (
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator
+        initialRouteName={APP_SCREEN.SPLASH}
+        screenOptions={{
+          freezeOnBlur: true,
+          navigationBarColor: '#fff',
+          statusBarTranslucent: true,
+          headerShown: false,
+        }}>
+        <Stack.Screen
+          name={APP_SCREEN.SPLASH}
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen name={APP_SCREEN.HOME} component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default RootNavigation;

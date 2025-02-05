@@ -58,5 +58,8 @@
 		<string>Ubuntu-MediumItalic.ttf</string>
 		<string>Ubuntu-Regular.ttf</string>
 	</array>
+	<!--  -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs to get your location...</string>
 </dict>
 </plist>
