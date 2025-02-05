@@ -1,0 +1,3 @@
+import {SLICE_NAME} from '@common/constant';
+
+export const FETCHCURRENTWEATHER = SLICE_NAME.WEATHER + 'FETCHCURRENTWEATHER';
