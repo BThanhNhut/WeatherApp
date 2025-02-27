@@ -1,7 +1,8 @@
-import {createAction, createSlice} from '@reduxjs/toolkit';
-import {IWeatherState} from '@model/weather';
 import {SLICE_NAME} from '@common/constant';
+import {ActionType} from '@model/index';
+import {ICoord, IWeatherResponse, IWeatherState} from '@model/weather';
 import * as Action from '@redux-action-type/weather';
+import {createAction, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 const initialWeatherState: IWeatherState = {
   currentWeather: null,
@@ -10,18 +11,18 @@ const initialWeatherState: IWeatherState = {
 const weatherSlice = createSlice({
   initialState: initialWeatherState,
   name: SLICE_NAME.WEATHER,
-  reducers: {},
+  reducers: {
+    setCurrentWeather: (state, {payload}: PayloadAction<IWeatherResponse>) => {
+      state.currentWeather = payload;
+    },
+  },
 });
 
 const fetchCurrentWeather = createAction(
   Action.FETCHCURRENTWEATHER,
-  (body: any, onSucceeded: () => void) => {
-    console.log('vao dc action');
+  (payload: ActionType<ICoord, IWeatherResponse>) => {
     return {
-      payload: {
-        body,
-        onSucceeded,
-      },
+      payload,
     };
   },
 );

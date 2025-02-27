@@ -22,7 +22,6 @@ const RXStoreComponent = forwardRef((_, ref) => {
     }),
     [dispatchRx, store],
   );
-
   return null;
 });
 

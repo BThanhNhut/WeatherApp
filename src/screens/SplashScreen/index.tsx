@@ -23,9 +23,9 @@ const SplashScreen = () => {
           timeout: 60000,
         })
           .then(location => {
-            console.log('Vi tri la', location);
+            // console.log('Vi tri la', location);
             setTimeout(() => {
-              replaceScreen(APP_SCREEN.HOME);
+              replaceScreen(APP_SCREEN.DRAWER);
             }, 1000);
           })
           .catch(err => {

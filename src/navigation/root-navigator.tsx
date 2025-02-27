@@ -6,9 +6,19 @@ import {APP_SCREEN} from './screen-types';
 import HomeScreen from '../screens/HomeScreen';
 import SplashScreen from '../screens/SplashScreen';
 import {navigationRef} from './navigation-service';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // Tạo Native Stack Navigator
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const HomeDrawer = () => {
+  return (
+    <Drawer.Navigator screenOptions={{headerShown: false}}>
+      <Drawer.Screen name={APP_SCREEN.HOME} component={HomeScreen} />
+    </Drawer.Navigator>
+  );
+};
 
 const RootNavigation = () => {
   return (
@@ -26,7 +36,7 @@ const RootNavigation = () => {
           component={SplashScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen name={APP_SCREEN.HOME} component={HomeScreen} />
+        <Stack.Screen name={APP_SCREEN.DRAWER} component={HomeDrawer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

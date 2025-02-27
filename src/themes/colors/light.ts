@@ -1,4 +1,4 @@
-export const colors = {
+export const lightColors = {
   primary: '#29bdbf',
   white: '#FFFFFF',
   white_rgba: {

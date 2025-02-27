@@ -1,4 +1,4 @@
-export const colors = {
+export const darkColors = {
   primary: '#29bdbf',
   white: '#FFFFFF',
   white_rgba: {

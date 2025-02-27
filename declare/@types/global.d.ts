@@ -83,6 +83,7 @@ declare global {
 
         msg?: string | null;
       });
+
   interface ParamsNetwork extends AxiosRequestConfig {
     url: string;
     params?: Record<string, string | number>;
