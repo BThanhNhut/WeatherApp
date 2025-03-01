@@ -1,16 +1,16 @@
 import {IWeatherResponse} from '@model/weather';
 import {weatherActions} from '@redux-slice/weather';
-import {selectCurrentWeather} from '@redux/selector/weather';
-import {colors} from '@themes/colors/index';
+// import {selectCurrentWeather} from '@redux/selector/weather';
+// import {colors} from '@themes/colors/index';
 import React, {useEffect} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {StyleSheet} from 'react-native-unistyles';
+// import {StyleSheet} from 'react-native-unistyles';
 import {useDispatch, useSelector} from 'react-redux';
 // import {weatherActions} from '@redux-slice';
 
 const HomeScreen = () => {
-  const {currentWeather} = useSelector(selectCurrentWeather);
+  // const {currentWeather} = useSelector(selectCurrentWeather);
 
   const dispatch = useDispatch();
   const inset = useSafeAreaInsets();
@@ -42,7 +42,7 @@ const HomeScreen = () => {
           <TouchableOpacity
             style={{width: 100, height: 100, backgroundColor: 'green'}}
             onPress={() => {
-              console.log('kettt quaaa la', currentWeather);
+              console.log('kettt quaaa la');
             }}
           />
         </View>
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   boxWeather: {
-    backgroundColor: colors.black_rgba.rgba_03,
+    backgroundColor: 'red',
   },
 });

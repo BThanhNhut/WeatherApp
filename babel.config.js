@@ -3,13 +3,11 @@ module.exports = function (api) {
   return {
     presets: ['module:@react-native/babel-preset'],
     plugins: [
-      ['react-native-unistyles/plugin'],
       [
         'module-resolver',
         {
           alias: {
             '@assets': './assets',
-
             '@common': './src/common',
             '@library': './src/library',
             '@model': './src/model',

@@ -36,7 +36,7 @@ const RootNavigation = () => {
           component={SplashScreen}
           options={{headerShown: false}}
         />
-        <Stack.Screen name={APP_SCREEN.DRAWER} component={HomeDrawer} />
+        <Stack.Screen name={APP_SCREEN.HOME} component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

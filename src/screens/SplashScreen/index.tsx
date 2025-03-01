@@ -25,7 +25,7 @@ const SplashScreen = () => {
           .then(location => {
             // console.log('Vi tri la', location);
             setTimeout(() => {
-              replaceScreen(APP_SCREEN.DRAWER);
+              replaceScreen(APP_SCREEN.HOME);
             }, 1000);
           })
           .catch(err => {
