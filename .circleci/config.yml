@@ -20,6 +20,11 @@ jobs:
             java -version
 
       - run:
+          name: Install tools & ninja
+          command: |
+            sudo apt-get install -y wget unzip gnupg ninja-build
+
+      - run:
           name: Install Node.js dependencies
           command: |
             cd ~/project
@@ -28,12 +33,11 @@ jobs:
       - run:
           name: Install Android SDK & Build Tools
           command: |
-            sudo apt-get install -y wget unzip gnupg
             wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
             unzip cmdline-tools.zip
             mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
             mv cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
-            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
+            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" "cmake;3.22.1" || true
 
       - run:
           name: Accept Android Licenses
@@ -42,7 +46,7 @@ jobs:
 
       - run:
           name: Build Android Release APK
-          command: ./gradlew assembleRelease 
+          command: ./gradlew assembleRelease --no-daemon --console=plain
 
       - store_artifacts:
           path: ~/project/android/app/build/outputs/apk/release
