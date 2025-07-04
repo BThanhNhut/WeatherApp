@@ -22,9 +22,7 @@ jobs:
       - run:
           name: Accept Android Licenses
           command: |
-            export ANDROID_SDK_ROOT=$HOME/android-sdk
-            export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
-            yes | sdkmanager --licenses
+            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
       - run:
           name: Install Build Tools & Platform
