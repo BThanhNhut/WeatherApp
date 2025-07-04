@@ -20,11 +20,12 @@ jobs:
             unzip cmdline-tools.zip
             mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
             mv cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
-            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+            # Fix exit code 141: thêm '|| true' để tránh pipe lỗi
+            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
 
       - run:
           name: Build Android Release APK
-          command: ./gradlew assembleRelease
+          command: ./gradlew assembleRelease --no-daemon --console=plain
 
       - store_artifacts:
           path: ~/project/android/app/build/outputs/apk/release
