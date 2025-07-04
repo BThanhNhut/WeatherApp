@@ -3,29 +3,42 @@ version: 2.1
 jobs:
   build-android:
     docker:
-      - image: cimg/openjdk:17.0
-    working_directory: ~/project/android
-    environment:
-      ANDROID_SDK_ROOT: /home/circleci/android-sdk
+      - image: cimg/openjdk:17.0  # CircleCI Docker image có sẵn Java 17
+    working_directory: ~/project/android  # Làm việc trong thư mục android của project
     steps:
       - checkout:
-          path: ~/project
+          path: ~/project  # Clone code vào ~/project
 
       - run:
-          name: Install Android SDK & Build Tools
+          name: Install Android SDK Command Line Tools
           command: |
-            sudo apt-get update -o Acquire::Retries=5
-            sudo apt-get install -y wget unzip gnupg
+            sudo apt-get update
+            sudo apt-get install -y wget unzip
+            mkdir -p $HOME/android-sdk/cmdline-tools
             wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
-            unzip cmdline-tools.zip
-            mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-            mv cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
-            # Fix exit code 141: thêm '|| true' để tránh pipe lỗi
-            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
+            unzip cmdline-tools.zip -d $HOME/android-sdk/cmdline-tools
+            mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
 
       - run:
-          name: Build Android Release APK
-          command: ./gradlew assembleRelease --no-daemon --console=plain
+          name: Accept Android Licenses
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/android-sdk
+            export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+            yes | sdkmanager --licenses
+
+      - run:
+          name: Install Build Tools & Platform
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/android-sdk
+            export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
+            sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+
+      - run:
+          name: Build Release APK
+          command: |
+            export ANDROID_SDK_ROOT=$HOME/android-sdk
+            cd ~/project/android
+            ./gradlew assembleRelease
 
       - store_artifacts:
           path: ~/project/android/app/build/outputs/apk/release
