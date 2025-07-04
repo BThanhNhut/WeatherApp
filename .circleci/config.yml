@@ -3,11 +3,21 @@ version: 2.1
 jobs:
   build-android:
     docker:
-      - image: cimg/node:20.11-browsers-android
+      - image: cimg/node:20.11-browsers
     working_directory: ~/project/android
+    environment:
+      ANDROID_SDK_ROOT: /home/circleci/android-sdk
     steps:
       - checkout:
           path: ~/project
+
+      - run:
+          name: Install OpenJDK 17
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y openjdk-17-jdk
+            sudo update-alternatives --set java /usr/lib/jvm/java-17-openjdk-amd64/bin/java
+            java -version
 
       - run:
           name: Install Node.js dependencies
@@ -18,12 +28,17 @@ jobs:
       - run:
           name: Install Android SDK & Build Tools
           command: |
-            yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
+            sudo apt-get install -y wget unzip gnupg
+            wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+            unzip cmdline-tools.zip
+            mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+            mv cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
+            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-33" "build-tools;33.0.2" || true
 
       - run:
           name: Accept Android Licenses
           command: |
-            yes | sdkmanager --licenses || true
+            yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
       - run:
           name: Build Android Release APK
