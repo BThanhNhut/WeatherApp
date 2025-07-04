@@ -8,7 +8,13 @@ jobs:
     steps:
       - checkout:
           path: ~/project  # Clone code vào ~/project
-
+      
+      - run:
+          name: Install Node.js dependencies
+          command: |
+            cd ~/project
+            yarn install
+          
       - run:
           name: Install Android SDK Command Line Tools
           command: |
