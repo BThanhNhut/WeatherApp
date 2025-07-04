@@ -42,7 +42,7 @@ jobs:
 
       - run:
           name: Build Android Release APK
-          command: ./gradlew assembleRelease --no-daemon --console=plain
+          command: ./gradlew assembleRelease 
 
       - store_artifacts:
           path: ~/project/android/app/build/outputs/apk/release
