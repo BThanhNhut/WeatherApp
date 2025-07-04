@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-android:
     docker:
-      - image: cimg/node:18.17-browsers
+      - image: cimg/node:20.11-browsers
     working_directory: ~/project/android
     environment:
       ANDROID_SDK_ROOT: /home/circleci/android-sdk
